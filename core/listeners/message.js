@@ -15,7 +15,8 @@ module.exports = (client, message) => {
     message.parameters = parameters
     command.requirements = _.defaults(command.requirements, {
       devOnly: false,
-      parameters: false
+      parameters: false,
+      permissions: []
     })
 
     if (command.requirements.devOnly && message.author.id !== process.env.OWNER_ID) return
@@ -26,6 +27,11 @@ module.exports = (client, message) => {
             message.channel.send(`${prefix}${command.name} ${command.usage}`, { code: 'fix' })
           }
         })
+    }
+    if (command.requirements.permissions.length) {
+      const requiredPermissions = _.difference(command.requirements.permissions, message.member.permissions.toArray())
+
+      if (requiredPermissions.length) return message.reply(`you need permissions: \`${requiredPermissions.join('\` \`')}\``)
     }
 
     command.execute(message)
