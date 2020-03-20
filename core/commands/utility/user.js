@@ -21,7 +21,6 @@ module.exports = {
     message.guild.members.fetch(target.id)
       .then((member) => {
         const activity = member.presence.activities[0]
-        console.log(member.roles.cache.size)
 
         message.channel.send(new MessageEmbed()
           .setColor(member.displayHexColor)
