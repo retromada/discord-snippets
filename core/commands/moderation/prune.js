@@ -4,7 +4,7 @@ module.exports = {
   description: 'Deletes existing messages on the channel',
   usage: '[amount]',
   category: 'moderation',
-  requirements: { paramenters: true, permissions: ['MANAGE_MESSAGES'] },
+  requirements: { parameters: true, permissions: ['MANAGE_MESSAGES'] },
   async execute(message) {
     const [amount] = message.parameters
 
