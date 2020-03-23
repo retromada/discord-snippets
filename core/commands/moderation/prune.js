@@ -14,10 +14,8 @@ module.exports = {
     message.channel.bulkDelete(amount)
       .then((messages) => {
         message.channel.send(`:wastebasket: : **${message.author.username}**, ${messages.size} message${messages.size === 1 ? '' : 's'} deleted!`)
-          .then((_message) => setTimeout(() => _message.delete(), 2555))
+          .then((_message) => _message.delete({ timeout: 2555 }))
       })
-      .catch((error) => {
-        message.channel.send(error.message, { code: 'fix' })
-      })
+      .catch((error) => message.channel.send(error.message, { code: 'fix' }))
   }
 }
