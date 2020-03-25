@@ -1,3 +1,5 @@
+const { DiscordUtils } = require('../../')
+
 module.exports = {
   name: 'ban',
   aliases: ['banne'],

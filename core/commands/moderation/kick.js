@@ -1,6 +1,8 @@
+const { DiscordUtils } = require('../../')
+
 module.exports = {
   name: 'kick',
-  description: 'This command allows you to kick a member',
+  description: 'User expulsion management',
   usage: '[user] <reason>',
   category: 'moderation',
   requirements: { parameters: true, permissions: ['KICK_MEMBERS'] },
