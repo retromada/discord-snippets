@@ -1,3 +1,6 @@
+const yes = ['yes', 'yeah']
+const no = ['no', 'nope']
+
 module.exports = {
   resolveUser(message, id) {
     const members = message.guild.members.cache
@@ -20,5 +23,20 @@ module.exports = {
     }
 
     return id
+  },
+
+  async verify(channel, user, time = 30000) {
+    const verify = await channel.awaitMessages((message) => {
+      const value = message.content.toLowerCase()
+      return (user ? message.author.id === user.id : true) && (yes.includes(value) || no.includes(value))
+    }, { max: 1, time })
+
+    if (!verify.size) return
+
+    const choice = verify.first().content.toLowerCase()
+
+    if (yes.includes(choice)) return true
+    if (no.includes(choice)) return false
+    return false
   }
 }
