@@ -5,6 +5,10 @@ module.exports = class Retromada extends Client {
   constructor(options) {
     super(options)
 
+    this.registryChannels = {
+      activities: process.env.ACTIVITIES_CHANNEL_ID
+    }
+
     this.initializeLoaders()
   }
 
