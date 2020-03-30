@@ -5,8 +5,8 @@ module.exports = class Retromada extends Client {
   constructor(options) {
     super(options)
 
-    this.registryChannels = {
-      activities: process.env.ACTIVITIES_CHANNEL_ID
+    this.notifyChannels = {
+      universal: process.env.NOTIFY_UNIVERSAL_CHANNEL_ID
     }
 
     this.initializeLoaders()
