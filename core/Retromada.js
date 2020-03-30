@@ -6,6 +6,7 @@ module.exports = class Retromada extends Client {
     super(options)
 
     this.notifyChannels = {
+      joinAndLeave: process.env.NOTIFY_JOIN_LEAVE_CHANNEL_ID,
       universal: process.env.NOTIFY_UNIVERSAL_CHANNEL_ID
     }
 
