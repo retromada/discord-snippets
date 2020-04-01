@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js')
 
 module.exports = (client, message, _message) => {
-  if (message.channel.id === client.notifyChannels.universal) return
+  if (message.channel.id === client.notifyChannels.universal || message.content === _message.content) return
 
   message.guild.channels.cache.get(client.notifyChannels.universal).send(new MessageEmbed()
     .setColor([255, 255, 0])
