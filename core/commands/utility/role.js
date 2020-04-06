@@ -53,7 +53,7 @@ module.exports = {
               name: 'Position',
               value: `${message.guild.roles.cache.size - role.position}/${message.guild.roles.cache.size - 1}`
             },
-          ].map((element) => Object.assign(element, { inline: true })))
+          ].map((element) => ({ ...element, inline: true })))
           .setFooter(`There are currently ${role.members.size} member${role.members.size === 1 ? '' : 's'} with this role. ${users.size ? `${users.size} User${users.size === 1 ? '' : 's'}` : ''}${users.size && bots.size ? ' / ' : ''}${bots.size ? `${bots.size} Bot${bots.size === 1 ? '' : 's'}` : ''}`)
         )
       })

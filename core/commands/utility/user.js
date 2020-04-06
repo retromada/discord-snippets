@@ -16,7 +16,7 @@ module.exports = {
   usage: '<user>',
   category: 'utility',
   async execute(message) {
-    let target = await message.client.users.fetch(DiscordUtils.resolveUser(message))
+    const target = await message.client.users.fetch(DiscordUtils.resolveUser(message))
 
     message.guild.members.fetch(target.id)
       .then((member) => {
@@ -64,8 +64,8 @@ module.exports = {
               value: member.roles.hoist
             }))
           ]
-          .filter((element) => element)
-          .map((element) => Object.assign(element, { inline: true })))
+          .filter(Boolean)
+          .map((element) => ({ ...element, inline: true })))
         )
       })
       .catch((error) => {
