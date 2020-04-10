@@ -7,7 +7,11 @@ module.exports = (client, message) => {
     .setColor([255, 0, 0])
     .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true, size: 64 }))
     .addField('Channel', message.channel)
-    .addField('Content', message.content)
+    .addField('Content',
+      message.content && !message.attachments.first()
+      ? message.content
+      : [message.content, message.attachments.first().url].join('\n')
+    )
     .setFooter(message.createdAt)
   )
 }
