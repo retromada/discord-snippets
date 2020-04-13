@@ -1,15 +1,12 @@
 {
-  "name": "rm-4919315rd",
-  "version": "0.0.15",
+  "name": "retromada",
+  "version": "0.0.15-discord",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tenasatupitsyn/rm-4919315rd.git"
+    "url": "https://github.com/retromada/discord.git"
   },
-  "author": {
-    "name": "Tenasa Tupitsyn",
-    "url": "http://tenasa.gq"
-  },
+  "author": "retromada",
   "dependencies": {
     "discord.js": "https://github.com/discordjs/discord.js.git",
     "lodash": "^4.17.15"
