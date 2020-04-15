@@ -19,7 +19,7 @@ module.exports = {
         if (proof) {
           _message.delete()
           member.ban({ reason: `(Issued by ${message.author.tag})${reason ? ` ${reason}` : ''}` })
-            .then((user) => message.channel.send(`${!user.bot ? 'User' : 'Bot'} **${user.tag}** was banned. Reason: \`${reason ? reason : 'None'}\``))
+            .then(({ user }) => message.channel.send(`${!user.bot ? 'User' : 'Bot'} **${user.tag}** was banned. Reason: \`${reason ? reason : 'None'}\``))
             .catch((error) => message.channel.send(error.message, { code: 'fix' }))
         } else {
           _message.delete()
