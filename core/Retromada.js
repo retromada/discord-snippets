@@ -1,13 +1,19 @@
 const { Client } = require('discord.js')
 const Loaders = require('./loaders')
+const {
+  NOTIFY_JOIN_LEAVE_CHANNEL_ID,
+  NOTIFY_BAN_UNBAN_CHANNEL_ID,
+  NOTIFY_UNIVERSAL_CHANNEL_ID
+} = process.env
 
 module.exports = class Retromada extends Client {
   constructor(options) {
     super(options)
 
     this.notifyChannels = {
-      joinAndLeave: process.env.NOTIFY_JOIN_LEAVE_CHANNEL_ID,
-      universal: process.env.NOTIFY_UNIVERSAL_CHANNEL_ID
+      joinAndLeave: NOTIFY_JOIN_LEAVE_CHANNEL_ID,
+      banAndUnban: NOTIFY_BAN_UNBAN_CHANNEL_ID,
+      universal: NOTIFY_UNIVERSAL_CHANNEL_ID
     }
 
     this.initializeLoaders()
