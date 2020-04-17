@@ -12,7 +12,7 @@ module.exports = {
 
     message.channel.overwritePermissions([
       {
-        id: '537658541859930132',
+        id: message.guild.id,
         ...{
           on: {
             deny: ['SEND_MESSAGES']
