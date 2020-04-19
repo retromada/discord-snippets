@@ -45,8 +45,14 @@ module.exports = {
               value: activity && (activity.state || activity.emoji)
                 ? `${activity.emoji
                   ? `${activity.emoji}${activity.state ? ` ${activity.state}` : ''}`
-                  : activity.state} [${activity.type}]`
-                : `${activity && activity.type} ${activity && activity.name}`
+                  : !activity.applicationID
+                    ? activity.state
+                    : [
+                        activity.name,
+                        activity.details,
+                        activity.state
+                      ].join('\n')} [${activity.type}]`
+                : `${activity && activity.type} ${activity && activity.name}${activity.type === 'STREAMING' ? `\n${activity.url}` : ''}`
             })), {
               name: 'Joined Server',
               value: member.joinedAt
