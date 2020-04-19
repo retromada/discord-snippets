@@ -52,7 +52,7 @@ module.exports = {
                         activity.details,
                         activity.state
                       ].join('\n')} [${activity.type}]`
-                : `${activity && activity.type} ${activity && activity.name}${activity.type === 'STREAMING' ? `\n${activity.url}` : ''}`
+                : `${activity && activity.type} ${activity && activity.name}${activity && activity.type === 'STREAMING' ? `\n${activity.url}` : ''}`
             })), {
               name: 'Joined Server',
               value: member.joinedAt
