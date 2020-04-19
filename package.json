@@ -1,6 +1,6 @@
 {
   "name": "retromada",
-  "version": "0.0.23-discord",
+  "version": "0.0.24-discord",
   "main": "index.js",
   "repository": {
     "type": "git",
