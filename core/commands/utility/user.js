@@ -21,6 +21,7 @@ module.exports = {
     message.guild.members.fetch(target.id)
       .then((member) => {
         const activity = member.presence.activities[0]
+        const voice = member.voice
 
         message.channel.send(new MessageEmbed()
           .setColor(member.displayHexColor)
@@ -68,6 +69,13 @@ module.exports = {
             }, (this.insertIf(member.roles.hoist, {
               name: 'Hoist Role',
               value: member.roles.hoist
+            })), (this.insertIf(voice.channelID, {
+              name: 'Voice Channel',
+              value: [
+                voice.channel,
+                `- Bitrate: ${voice.channel && voice.channel.bitrate.toString().slice(0, -3)}kbps`,
+                `- User Limit: ${voice.channel && voice.channel.userLimit ? voice.channel.userLimit : 'Unlimited'}`
+              ].join('\n')
             }))
           ]
           .filter(Boolean)
