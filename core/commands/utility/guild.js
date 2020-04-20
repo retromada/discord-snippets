@@ -18,8 +18,8 @@ module.exports = {
     const roles = guild.roles.cache
 
     message.channel.send(new MessageEmbed()
-      .setAuthor(guild.name, guild.iconURL({ format: 'png', dynamic: true, size: 64 }))
-      .setThumbnail(guild.iconURL({ format: 'png', dynamic: true, size: 256 }))
+      .setAuthor(guild.name, guild.iconURL({ dynamic: true, size: 64 }))
+      .setThumbnail(guild.iconURL({ dynamic: true, size: 256 }))
       .addFields([
         {
           name: 'Information',
