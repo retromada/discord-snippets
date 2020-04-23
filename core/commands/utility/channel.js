@@ -8,29 +8,29 @@ module.exports = {
   execute(message) {
     const channel = message.channel
 
-		message.channel.send(new MessageEmbed()
-			.setTitle(channel.name)
-			.setDescription(message.channel)
-			.addFields([
-				{
-					name: 'ID',
-					value: channel.id,
-					inline: false
-				}, {
-					name: 'Type',
-					value: channel.type
-				}, {
-					name: 'NSFW',
-					value: channel.nsfw
-				}, {
-					name: 'Creation Date',
-					value: channel.createdAt
-				}, {
-					name: 'Topic',
-					value: channel.topic,
-					inline: false
-				}
-			].map((element) => element.inline !== false ? ({ ...element, inline: true }) : element))
+  	channel.send(new MessageEmbed()
+  		.setTitle(channel.name)
+  		.setDescription(message.channel)
+  		.addFields([
+  			{
+  				name: 'ID',
+  				value: channel.id,
+  				inline: false
+  			}, {
+  				name: 'Type',
+  				value: channel.type
+  			}, {
+  				name: 'NSFW',
+  				value: channel.nsfw
+  			}, {
+  				name: 'Creation Date',
+  				value: channel.createdAt
+  			}, {
+  				name: 'Topic',
+  				value: channel.topic,
+  				inline: false
+  			}
+  		].map((element) => element.inline !== false ? ({ ...element, inline: true }) : element))
     )
   }
 }
