@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js')
 module.exports = {
   name: 'role',
   aliases: ['rinfo', 'roleinfo'],
-  description: 'Shows detailed information on a role',
+  description: 'Shows details about the role',
   usage: '[role]',
   category: 'utility',
   requirements: { parameters: true },
