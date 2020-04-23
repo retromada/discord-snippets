@@ -26,12 +26,11 @@ module.exports = {
 
         message.channel.send(new MessageEmbed()
           .setColor(role.hexColor)
+          .setTitle(role.name)
+          .setDescription(role)
           .setThumbnail(`https://dummyimage.com/64/${role.hexColor.repeat(2).split('#').filter(Boolean).join('/')}`)
           .addFields([
             {
-              name: 'Name',
-              value: role.name
-            }, {
               name: 'ID',
               value: role.id
             }, {
