@@ -12,5 +12,5 @@ module.exports = (client, message, _message) => {
     .addField('Before', whatContains(message))
     .addField('After', whatContains(_message))
     .setFooter(message.createdAt)
-  )
+  ).catch((error) => client.log(error))
 }
