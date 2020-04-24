@@ -10,6 +10,7 @@ module.exports = class Retromada extends Client {
   constructor(options) {
     super(options)
 
+    this.queue = new Map()
     this.notifyChannels = {
       joinAndLeave: NOTIFY_JOIN_LEAVE_CHANNEL_ID,
       banAndUnban: NOTIFY_BAN_UNBAN_CHANNEL_ID,
