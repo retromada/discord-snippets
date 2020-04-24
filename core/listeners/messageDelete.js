@@ -13,5 +13,5 @@ module.exports = (client, message) => {
       : [message.content, message.attachments.first().url].join('\n')
     )
     .setFooter(message.createdAt)
-  )
+  ).catch((error) => client.log(error))
 }
