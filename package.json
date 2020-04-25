@@ -1,6 +1,6 @@
 {
   "name": "retromada",
-  "version": "0.0.30-discord.music-0.1",
+  "version": "0.0.30-discord.music-0.2",
   "main": "index.js",
   "repository": {
     "type": "git",
