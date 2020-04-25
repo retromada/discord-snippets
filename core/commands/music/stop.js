@@ -5,7 +5,7 @@ module.exports = {
   aliases: [],
   description: 'Stops playback and clears the entire queue',
   category: 'music',
-  async execute(message) {
+  execute(message) {
     const { channel } = message.member.voice
 
     if (!channel) return message.channel.send(new MessageEmbed()
