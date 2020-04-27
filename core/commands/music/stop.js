@@ -14,6 +14,12 @@ module.exports = {
     )
 
     const queue = message.client.queue.get(message.guild.id)
+
+    if (!queue || (queue && !queue.playing)) return message.channel.send(new MessageEmbed()
+      .setColor([255, 0, 0])
+      .setDescription('Everything is already stopped.')
+    )
+
     queue.songs = []
     queue.connection.dispatcher.end()
     queue.playing = false
