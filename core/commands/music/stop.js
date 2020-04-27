@@ -5,15 +5,15 @@ module.exports = {
   aliases: [],
   description: 'Stops playback and clears the entire queue',
   category: 'music',
+  requirements: { needVoiceChannel: true },
   execute(message) {
-    const { channel } = message.member.voice
+    const queue = message.client.queue.get(message.guild.id)
 
-    if (!channel) return message.channel.send(new MessageEmbed()
+    if (!queue || (queue && !queue.playing)) return message.channel.send(new MessageEmbed()
       .setColor([255, 0, 0])
-      .setDescription('Go to a voice channel!')
+      .setDescription('Everything is already stopped.')
     )
 
-    const queue = message.client.queue.get(message.guild.id)
     queue.songs = []
     queue.connection.dispatcher.end()
     queue.playing = false
