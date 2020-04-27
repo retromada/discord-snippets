@@ -15,5 +15,6 @@ module.exports = {
 
     const queue = message.client.queue.get(message.guild.id)
     queue.connection.dispatcher.end()
+    message.react('👌')
   }
 }
