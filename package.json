@@ -1,21 +1,27 @@
 {
   "name": "retromada",
-  "version": "0.0.31-discord.social-0.0",
+  "version": "0.0.31-discord.social-0.1",
   "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/retromada/discord.git"
   },
   "author": "retromada",
+  "engines": {
+    "node": "12.x"
+  },
   "dependencies": {
     "discord.js": "https://github.com/discordjs/discord.js.git",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "mongoose": "^5.9.10",
+    "transform-props": "^1.0.1"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
     "nodemon": "^2.0.2"
   },
   "scripts": {
+    "start": "node index.js",
     "dev": "nodemon --exec node -r dotenv/config index.js"
   },
   "license": "ISC"
