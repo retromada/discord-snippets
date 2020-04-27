@@ -7,16 +7,10 @@ module.exports = {
   description: 'Play your entries or add the queue if something is already playing',
   usage: '[link]',
   category: 'music',
-  requirements: { parameters: true },
+  requirements: { parameters: true, needVoiceChannel: true },
   async execute(message) {
-    const { channel } = message.member.voice
-
-    if (!channel) return message.channel.send(new MessageEmbed()
-      .setColor([255, 0, 0])
-      .setDescription('Go to a voice channel!')
-    )
-
     try {
+      const { channel } = message.member.voice
       const serverQueue = message.client.queue.get(message.guild.id)
       const songInfo = await ytdl.getInfo(message.parameters[0].replace(/<(.+)>/g, '$1'))
       const song = {

@@ -16,7 +16,8 @@ module.exports = (client, message) => {
     command.requirements = _.defaults(command.requirements, {
       devOnly: false,
       parameters: false,
-      permissions: []
+      permissions: [],
+      needVoiceChannel: false
     })
 
     if (command.requirements.devOnly && message.author.id !== process.env.OWNER_ID) return
@@ -33,6 +34,7 @@ module.exports = (client, message) => {
 
       if (requiredPermissions.length) return message.reply(`you need permissions: \`${requiredPermissions.join('\` \`')}\``)
     }
+    if (command.requirements.needVoiceChannel && !message.member.voice.channel) return message.reply('go to a voice channel.')
 
     command.execute(message)
   } catch (error) {

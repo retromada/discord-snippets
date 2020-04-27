@@ -5,14 +5,8 @@ module.exports = {
   aliases: ['v', 'vol'],
   description: 'Sets the player volume',
   category: 'music',
+  requirements: { needVoiceChannel: true },
   execute(message) {
-    const { channel } = message.member.voice
-
-    if (!channel) return message.channel.send(new MessageEmbed()
-      .setColor([255, 0, 0])
-      .setDescription('Go to a voice channel!')
-    )
-
     const [amount] = message.parameters
     const queue = message.client.queue.get(message.guild.id)
 
