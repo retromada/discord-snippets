@@ -53,18 +53,15 @@ module.exports = {
         .on('finish', () => {
           queue.songs.shift()
           play(queue.songs[0])
+
+          if (!queue.songs.length) queue.playing = false
         })
         .on('error', (error) => message.client.log(error))
       dispatcher.setVolumeLogarithmic(queue.volume / 5)
       queue.text.send(new MessageEmbed()
         .setTitle('Now playing')
         .setDescription(`[${song.title}](${song.url}) [${song.requester}]`)
-      ).then((_message) => {
-        _message.delete({ timeout: song.duration })
-        setTimeout(() => {
-          if (!queue.songs.length) queue.playing = false
-        }, song.duration)
-      })
+      ).then((_message) => _message.delete({ timeout: song.duration }))
     }
 
     try {
