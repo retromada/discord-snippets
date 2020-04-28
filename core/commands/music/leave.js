@@ -7,9 +7,9 @@ module.exports = {
   category: 'music',
   requirements: { needVoiceChannel: true },
   execute(message) {
-    const queue = message.client.queue.get(message.guild.id)
-    queue.songs = []
-    queue.voice.leave()
+    const player = message.client.player.get(message.guild.id)
+    player.songs = []
+    player.voice.leave()
     message.react('👋')
   }
 }

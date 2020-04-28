@@ -7,14 +7,14 @@ module.exports = {
   category: 'music',
   requirements: { needVoiceChannel: true },
   execute(message) {
-    const queue = message.client.queue.get(message.guild.id)
+    const player = message.client.player.get(message.guild.id)
 
-    if (!queue || (queue && !queue.songs.length)) return message.channel.send(new MessageEmbed()
+    if (!player || (player && !player.songs.length)) return message.channel.send(new MessageEmbed()
       .setColor([255, 0, 0])
       .setDescription('There is no song playing!')
     )
 
-    queue.connection.dispatcher.end()
+    player.connection.dispatcher.end()
     message.react('👌')
   }
 }

@@ -5,7 +5,7 @@ module.exports = class Retromada extends Client {
   constructor(options) {
     super(options)
 
-    this.queue = new Map()
+    this.player = new Map()
 
     this.initializeLoaders()
   }

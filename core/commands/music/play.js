@@ -13,7 +13,7 @@ module.exports = {
     try {
       const [link] = message.parameters
       const { channel } = message.member.voice
-      const serverQueue = message.client.queue.get(message.guild.id)
+      const serverQueue = message.client.player.get(message.guild.id)
       const videoID = async () => {
         const { items } = await message.client.apis.youtube.search(message.parameters.join(' '), undefined, 3)
         const videos = await message.client.apis.youtube.videos(items.map((video) => video.id.videoId), 'contentDetails')
@@ -44,25 +44,25 @@ module.exports = {
         playing: true
       }
 
-      message.client.queue.set(message.guild.id, queueObject)
+      message.client.player.set(message.guild.id, queueObject)
       queueObject.songs.push(song)
 
       const play = (song) => {
-        const queue = message.client.queue.get(message.guild.id)
+        const player = message.client.player.get(message.guild.id)
 
         if (!song) return
-        if (queue.songs.length && !queue.playing) queue.playing = true
+        if (player.songs.length && !player.playing) player.playing = true
 
-        const dispatcher = queue.connection.play(ytdl(song.url, { filter: 'audioonly' }))
+        const dispatcher = player.connection.play(ytdl(song.url, { filter: 'audioonly' }))
           .on('finish', () => {
-            queue.songs.shift()
-            play(queue.songs[0])
+            player.songs.shift()
+            play(player.songs[0])
 
-            if (!queue.songs.length) queue.playing = false
+            if (!player.songs.length) player.playing = false
           })
           .on('error', (error) => message.client.log(error))
-        dispatcher.setVolumeLogarithmic(queue.volume / 100)
-        queue.text.send(new MessageEmbed()
+        dispatcher.setVolumeLogarithmic(player.volume / 100)
+        player.text.send(new MessageEmbed()
           .setTitle('Now playing')
           .setDescription(`[${song.title}](${song.url}) [${song.requester}]`)
         ).then((_message) => _message.delete({ timeout: song.duration }))
@@ -74,7 +74,7 @@ module.exports = {
         play(queueObject.songs[0])
       } catch (error) {
         message.client.log(error)
-        message.client.queue.delete(message.guild.id)
+        message.client.player.delete(message.guild.id)
         await channel.leave()
         return message.channel.send(new MessageEmbed()
           .setColor([255, 0, 0])

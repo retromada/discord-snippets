@@ -7,16 +7,16 @@ module.exports = {
   category: 'music',
   requirements: { needVoiceChannel: true },
   execute(message) {
-    const queue = message.client.queue.get(message.guild.id)
+    const player = message.client.player.get(message.guild.id)
 
-    if (!queue || (queue && !queue.playing)) return message.channel.send(new MessageEmbed()
+    if (!player || (player && !player.playing)) return message.channel.send(new MessageEmbed()
       .setColor([255, 0, 0])
       .setDescription('Everything is already stopped.')
     )
 
-    queue.songs = []
-    queue.connection.dispatcher.end()
-    queue.playing = false
+    player.songs = []
+    player.connection.dispatcher.end()
+    player.playing = false
     message.react('🛑')
   }
 }
