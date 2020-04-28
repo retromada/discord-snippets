@@ -6,9 +6,9 @@ module.exports = {
   name: 'play',
   aliases: ['p'],
   description: 'Play your entries or add the queue if something is already playing',
-  usage: '[link]',
+  usage: '[search query|youtube url]',
   category: 'music',
-  requirements: { parameters: true, needVoiceChannel: false },
+  requirements: { parameters: true, needVoiceChannel: true },
   async execute(message) {
     try {
       const [link] = message.parameters
