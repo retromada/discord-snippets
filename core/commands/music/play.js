@@ -1,5 +1,6 @@
 const { MessageEmbed, Util } = require('discord.js')
 const ytdl = require('ytdl-core')
+const { parse } = require('url')
 
 module.exports = {
   name: 'play',
@@ -7,12 +8,20 @@ module.exports = {
   description: 'Play your entries or add the queue if something is already playing',
   usage: '[link]',
   category: 'music',
-  requirements: { parameters: true, needVoiceChannel: true },
+  requirements: { parameters: true, needVoiceChannel: false },
   async execute(message) {
     try {
+      const [link] = message.parameters
       const { channel } = message.member.voice
       const serverQueue = message.client.queue.get(message.guild.id)
-      const songInfo = await ytdl.getInfo(message.parameters[0].replace(/<(.+)>/g, '$1'))
+      const videoID = async () => {
+        const { items } = await message.client.apis.youtube.search(message.parameters.join(' '), undefined, 3)
+        const videos = await message.client.apis.youtube.videos(items.map((video) => video.id.videoId), 'contentDetails')
+        const video = videos.find((video) => !video.contentDetails.regionRestriction)
+
+        return video && video.id
+      }
+      const songInfo = await ytdl.getInfo(!parse(link).slashes ? await videoID() : link.replace(/<(.+)>/g, '$1'))
       const song = {
         id: songInfo.video_id,
         title: Util.escapeMarkdown(songInfo.title),
