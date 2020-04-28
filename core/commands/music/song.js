@@ -13,11 +13,11 @@ module.exports = {
       .setDescription('There is no song playing!')
     )
 
-    const song = queue.songs[0]
+    const songs = queue.songs
 
     message.channel.send(new MessageEmbed()
       .setTitle('Currently playing')
-      .setDescription(`[${song.title}](${song.url}) [${song.requester}]`)
+      .setDescription(`[${songs[0].title}](${songs[0].url}) [${songs[0].requester}]`)
     )
   }
 }
