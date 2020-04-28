@@ -4,7 +4,7 @@ module.exports = {
   name: 'remove',
   aliases: ['del', 'delete'],
   description: 'Removes the specified track from the queue',
-  usage: '[track]'
+  usage: '[track]',
   category: 'music',
   requirements: { parameters: true, needVoiceChannel: true },
   execute(message) {
