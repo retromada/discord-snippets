@@ -1,6 +1,5 @@
 const { MessageEmbed, Util } = require('discord.js')
-const ytdl = require('ytdl-core')
-const { parse } = require('url')
+const { PlayerManager } = require('../../music')
 
 module.exports = {
   name: 'play',
@@ -11,67 +10,38 @@ module.exports = {
   requirements: { parameters: true, needVoiceChannel: true },
   async execute(message) {
     try {
-      const [link] = message.parameters
       const { channel } = message.member.voice
-      const serverQueue = message.client.player.get(message.guild.id)
-      const videoID = async () => {
-        const { items } = await message.client.apis.youtube.search(message.parameters.join(' '), undefined, 3)
-        const videos = await message.client.apis.youtube.videos(items.map((video) => video.id.videoId), 'contentDetails')
-        const video = videos.find((video) => !video.contentDetails.regionRestriction)
-
-        return video && video.id
-      }
-      const songInfo = await ytdl.getInfo(!parse(link).slashes ? await videoID() : link.replace(/<(.+)>/g, '$1'))
-      const song = {
-        id: songInfo.video_id,
-        title: Util.escapeMarkdown(songInfo.title),
-        url: songInfo.video_url,
-        duration: Number(songInfo.length_seconds) * 1E3,
+      const serverPlayer = message.client.player.get(message.guild.id)
+      const trackInfo = await PlayerManager.loadTracks(message.parameters.join(' '), message)
+      const track = {
+        id: trackInfo.video_id,
+        title: Util.escapeMarkdown(trackInfo.title),
+        url: trackInfo.video_url,
+        duration: Number(trackInfo.length_seconds) * 1E3,
         requester: message.author
       }
 
-      if (serverQueue && serverQueue.playing) {
-        serverQueue.songs.push(song)
-        return message.channel.send(new MessageEmbed().setDescription(`Queued [${song.title}](${song.url}) [${song.requester}]`))
+      if (serverPlayer && serverPlayer.playing) {
+        serverPlayer.tracks.push(track)
+        return message.channel.send(new MessageEmbed().setDescription(`Queued [${track.title}](${track.url}) [${track.requester}]`))
       }
 
-      const queueObject = {
+      const playerObject = {
         text: message.channel,
         voice: channel,
         connection: null,
-        songs: [],
+        tracks: [],
         volume: 100,
         playing: true
       }
 
-      message.client.player.set(message.guild.id, queueObject)
-      queueObject.songs.push(song)
-
-      const play = (song) => {
-        const player = message.client.player.get(message.guild.id)
-
-        if (!song) return
-        if (player.songs.length && !player.playing) player.playing = true
-
-        const dispatcher = player.connection.play(ytdl(song.url, { filter: 'audioonly' }))
-          .on('finish', () => {
-            player.songs.shift()
-            play(player.songs[0])
-
-            if (!player.songs.length) player.playing = false
-          })
-          .on('error', (error) => message.client.log(error))
-        dispatcher.setVolumeLogarithmic(player.volume / 100)
-        player.text.send(new MessageEmbed()
-          .setTitle('Now playing')
-          .setDescription(`[${song.title}](${song.url}) [${song.requester}]`)
-        ).then((_message) => _message.delete({ timeout: song.duration }))
-      }
+      message.client.player.set(message.guild.id, playerObject)
+      playerObject.tracks.push(track)
 
       try {
         const connection = await channel.join()
-        queueObject.connection = connection
-        play(queueObject.songs[0])
+        playerObject.connection = connection
+        PlayerManager.play(playerObject.tracks[0], message)
       } catch (error) {
         message.client.log(error)
         message.client.player.delete(message.guild.id)
