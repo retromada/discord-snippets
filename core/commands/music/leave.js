@@ -8,7 +8,7 @@ module.exports = {
   requirements: { needVoiceChannel: true },
   execute(message) {
     const player = message.client.player.get(message.guild.id)
-    player.songs = []
+    player.tracks = []
     player.voice.leave()
     message.react('👋')
   }

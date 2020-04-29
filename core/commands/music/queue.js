@@ -6,8 +6,8 @@ module.exports = {
   execute(message) {
     const player = message.client.player.get(message.guild.id)
 
-    if (!player || (player && !player.songs.length)) return message.channel.send('The queue is empty ;-;', { code: 'nimrod' })
+    if (!player || (player && !player.tracks.length)) return message.channel.send('The queue is empty ;-;', { code: 'nimrod' })
 
-    message.channel.send(player.songs.map((song, index) => `${index + 1}) ${song.title}`).join('\n'), { code: 'ml' })
+    message.channel.send(player.tracks.map((song, index) => `${index + 1}) ${song.title}`).join('\n'), { code: 'ml' })
   }
 }

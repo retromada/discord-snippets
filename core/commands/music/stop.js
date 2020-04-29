@@ -14,7 +14,7 @@ module.exports = {
       .setDescription('Everything is already stopped.')
     )
 
-    player.songs = []
+    player.tracks = []
     player.connection.dispatcher.end()
     player.playing = false
     message.react('🛑')

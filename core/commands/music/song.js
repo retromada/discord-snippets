@@ -8,16 +8,16 @@ module.exports = {
   execute(message) {
     const player = message.client.player.get(message.guild.id)
 
-    if (!player || (player && !player.songs.length)) return message.channel.send(new MessageEmbed()
+    if (!player || (player && !player.tracks.length)) return message.channel.send(new MessageEmbed()
       .setColor([255, 0, 0])
       .setDescription('There is no song playing!')
     )
 
-    const songs = player.songs
+    const tracks = player.tracks
 
     message.channel.send(new MessageEmbed()
       .setTitle('Currently playing')
-      .setDescription(`[${songs[0].title}](${songs[0].url}) [${songs[0].requester}]`)
+      .setDescription(`[${tracks[0].title}](${tracks[0].url}) [${tracks[0].requester}]`)
     )
   }
 }
