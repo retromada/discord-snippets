@@ -16,7 +16,7 @@ module.exports = {
     )
     if (!amount) return message.channel.send(new MessageEmbed()
       .setTitle('Volume')
-      .setDescription(`**${player.volume}%** (${(player.connection.dispatcher.volumeLogarithmic).toFixed(1)})`)
+      .setDescription(`Current volume is **${player.volume}%** (${(player.connection.dispatcher.volumeLogarithmic).toFixed(1)})`)
     )
     if (isNaN(amount) || amount < 1 || amount > 100) return message.channel.send(new MessageEmbed()
       .setColor([255, 0, 0])
