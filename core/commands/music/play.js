@@ -25,14 +25,15 @@ module.exports = {
         serverPlayer.tracks.push(track)
         return message.channel.send(new MessageEmbed().setDescription(`Queued [${track.title}](${track.url}) [${track.requester}]`))
       }
-
-      const playerObject = {
-        text: message.channel,
-        voice: channel,
-        connection: null,
-        tracks: [],
-        volume: 100,
-        playing: true
+      if (!serverPlayer) {
+        const playerObject = {
+          text: message.channel,
+          voice: channel,
+          connection: null,
+          tracks: [],
+          volume: 100,
+          playing: true
+        }
       }
 
       message.client.player.set(message.guild.id, playerObject)
