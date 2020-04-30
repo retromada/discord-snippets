@@ -23,7 +23,7 @@ module.exports = {
       .setDescription('Enter a value between 1 and 100.')
     )
 
-    player.volume = amount
+    player.volume = Number(amount)
     player.connection.dispatcher.setVolumeLogarithmic(amount / 100)
     message.channel.send(new MessageEmbed().setDescription(`Volume set to **${player.volume}%** (${(player.connection.dispatcher.volumeLogarithmic).toFixed(1)})`))
   }
