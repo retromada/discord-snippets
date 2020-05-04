@@ -20,10 +20,12 @@ module.exports = {
 
     const dispatcher = player.connection.play(ytdl(track.url, { filter: 'audioonly' }))
       .on('finish', () => {
+        player.message.delete()
         player.tracks.shift()
-        this.play(player.tracks[0], message)
 
         if (!player.tracks.length) player.playing = false
+
+        this.play(player.tracks[0], message)
       })
       .on('error', (error) => message.client.log(error))
 
@@ -31,6 +33,6 @@ module.exports = {
     player.text.send(new MessageEmbed()
       .setTitle('Now playing')
       .setDescription(`[${track.title}](${track.url}) [${track.requester}]`)
-    ).then((_message) => _message.delete({ timeout: track.duration }))
+    ).then((_message) => player.message = _message)
   }
 }
