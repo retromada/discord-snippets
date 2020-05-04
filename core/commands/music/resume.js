@@ -9,7 +9,7 @@ module.exports = {
   execute(message) {
     const player = message.client.player.get(message.guild.id)
 
-    if (!player || (player && !player.playing)) return message.channel.send(new MessageEmbed()
+    if (!player || (player && player.playing)) return message.channel.send(new MessageEmbed()
       .setColor([255, 0, 0])
       .setDescription(player ? 'A track is already playing.' : 'There is nothing to be playing.')
     )
