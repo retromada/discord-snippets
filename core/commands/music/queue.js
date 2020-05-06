@@ -8,6 +8,6 @@ module.exports = {
 
     if (!player || (player && !player.tracks.length)) return message.channel.send('The queue is empty ;-;', { code: 'nimrod' })
 
-    message.channel.send(player.tracks.map((song, index) => `${index + 1}) ${song.title}`).join('\n'), { code: 'ml' })
+    message.channel.send(player.tracks.map((track, index, self) => `${index === 0 ? '     🡷 𝙽𝚘𝚠 𝚙𝚕𝚊𝚢𝚒𝚗𝚐\n' : ''}${index + 1}) ${track.title}${index === 0 && self.length > 1 ? '\n' : ''}`).join('\n'), { code: 'ml' })
   }
 }
