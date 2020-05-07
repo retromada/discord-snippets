@@ -40,7 +40,7 @@ module.exports = {
               value: member.user.bot ? 'Yes' : 'No'
             }, {
               name: 'Currently',
-              value: `${member.presence.status}${member.presence.clientStatus ? ` [${Object.keys(member.presence.clientStatus)[0]}]` : ''}`
+              value: `${member.presence.status}${member.presence.clientStatus && member.presence.clientStatus !== null && Object.keys(member.presence.clientStatus).length ? ` [${Object.keys(member.presence.clientStatus)[0]}]` : ''}`
             }, (this.insertIf(activity, {
               name: 'Activity',
               value: activity && (activity.state || activity.emoji)
@@ -90,7 +90,7 @@ module.exports = {
             .setThumbnail(target.displayAvatarURL({ dynamic: true, size: 256 }))
             .addField('ID', target.id, true)
             .addField('Bot', target.bot ? 'Yes' : 'No', true)
-            .addField('Currently', `${target.presence.status}${target.presence.clientStatus ? ` [${Object.keys(target.presence.clientStatus)[0]}]` : ''}`, true)
+            .addField('Currently', `${target.presence.status}${target.presence.clientStatus && target.presence.clientStatus && Object.keys(target.presence.clientStatus).length ? ` [${Object.keys(target.presence.clientStatus)[0]}]` : ''}`, true)
             .addField('Joined Discord', target.createdAt, true)
           )
         } else {
