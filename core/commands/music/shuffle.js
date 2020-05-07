@@ -15,7 +15,7 @@ module.exports = {
     )
 
     const tracks = player.tracks.slice(1).sort(() => Math.random() - .5)
-    player.tracks.slice(0, 1).push(...tracks)
+    player.tracks = player.tracks.slice(0, 1).concat(tracks)
     message.react('🔄')
   }
 }
