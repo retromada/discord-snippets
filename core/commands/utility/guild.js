@@ -44,7 +44,7 @@ module.exports = {
           name: 'Channels',
           value: [
             `System: ${guild.systemChannel}`,
-            `Widget: ${guild.widgetChannel ? guild.widgetChannel : 'None'}`
+            `Widget: ${guild.widgetEnabled ? guild.widgetChannel : 'None'}`
           ].join('\n'),
           inline: false
         }, {
@@ -63,9 +63,9 @@ module.exports = {
           name: '­',
           value: [
             `Boosts: ${guild.premiumSubscriptionCount ? guild.premiumSubscriptionCount : 0}`,
-            `Roles: ${roles.size}`,
-            `- [Unmanaged]: ${roles.filter(({ managed }) => !managed).size}`,
-            `- [Managed]: ${roles.filter(({ managed }) => managed).size}`
+            `Roles: ${roles.size - 1}`,
+            `- [Unmanaged]: ${roles.filter(({ editable }) => !editable).size}`,
+            `- [Managed]: ${roles.filter(({ editable }) => editable).size - 1}`
           ].join('\n')
         }
       ].map((element) => element.inline !== false ? ({ ...element, inline: true }) : element))
