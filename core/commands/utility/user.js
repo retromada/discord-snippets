@@ -54,6 +54,9 @@ module.exports = {
                         activity.state
                       ].join('\n')} [${activity.type}]`
                 : activity ? `${activity.type} ${activity.name}${activity.type === 'STREAMING' ? `\n${activity.url}` : ''}` : ''
+            })), (this.insertIf(member.user.flags.toArray().length, {
+              name: 'Flags',
+              value: member.user.flags.toArray().join(' ')
             })), {
               name: 'Joined Server',
               value: member.joinedAt
@@ -88,10 +91,26 @@ module.exports = {
             .setTitle(target.tag)
             .setDescription(target)
             .setThumbnail(target.displayAvatarURL({ dynamic: true, size: 256 }))
-            .addField('ID', target.id, true)
-            .addField('Bot', target.bot ? 'Yes' : 'No', true)
-            .addField('Currently', `${target.presence.status}${target.presence.clientStatus && target.presence.clientStatus && Object.keys(target.presence.clientStatus).length ? ` [${Object.keys(target.presence.clientStatus)[0]}]` : ''}`, true)
-            .addField('Joined Discord', target.createdAt, true)
+            .addFields([
+              {
+                name: 'ID',
+                value: target.id
+              }, {
+                name: 'Bot',
+                value: target.bot ? 'Yes' : 'No'
+              }, {
+                name: 'Currently',
+                value: `${target.presence.status}${target.presence.clientStatus && target.presence.clientStatus && Object.keys(target.presence.clientStatus).length ? ` [${Object.keys(target.presence.clientStatus)[0]}]` : ''}`
+              }, (this.insertIf(target.flags.toArray().length, {
+                name: 'Flags',
+                value: target.flags.toArray().join(' ')
+              })), {
+                name: 'Joined Discord',
+                value: target.createdAt
+              }
+            ]
+            .filter(Boolean)
+            .map((element) => ({ ...element, inline: true })))
           )
         } else {
           message.channel.send(error.message, { code: 'fix' })
