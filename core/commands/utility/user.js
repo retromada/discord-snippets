@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js')
-const { DiscordUtils } = require('../../')
+const { Utils, DiscordUtils } = require('../../')
 
 module.exports = {
   name: 'user',
@@ -29,7 +29,7 @@ module.exports = {
           .setDescription(member)
           .setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 256 }))
           .addFields([
-            (this.insertIf(member.nickname, {
+            (Utils.insertIf(member.nickname, {
               name: 'Nickname',
               value: member.nickname,
             })), {
@@ -41,7 +41,7 @@ module.exports = {
             }, {
               name: 'Currently',
               value: `${member.presence.status}${member.presence.clientStatus && member.presence.clientStatus !== null && Object.keys(member.presence.clientStatus).length ? ` [${Object.keys(member.presence.clientStatus)[0]}]` : ''}`
-            }, (this.insertIf(activity, {
+            }, (Utils.insertIf(activity, {
               name: 'Activity',
               value: activity && (activity.state || activity.emoji)
                 ? `${activity.emoji
@@ -54,7 +54,7 @@ module.exports = {
                         activity.state
                       ].join('\n')} [${activity.type}]`
                 : activity ? `${activity.type} ${activity.name}${activity.type === 'STREAMING' ? `\n${activity.url}` : ''}` : ''
-            })), (this.insertIf(member.user.flags.toArray().length, {
+            })), (Utils.insertIf(member.user.flags.toArray().length, {
               name: 'Flags',
               value: member.user.flags.toArray().join(' ')
             })), {
@@ -69,10 +69,10 @@ module.exports = {
             }, {
               name: 'Highest Role',
               value: member.roles.highest
-            }, (this.insertIf(member.roles.hoist, {
+            }, (Utils.insertIf(member.roles.hoist, {
               name: 'Hoist Role',
               value: member.roles.hoist
-            })), (this.insertIf(voice.channelID, {
+            })), (Utils.insertIf(voice.channelID, {
               name: 'Voice Channel',
               value: [
                 voice.channel,
@@ -101,7 +101,7 @@ module.exports = {
               }, {
                 name: 'Currently',
                 value: `${target.presence.status}${target.presence.clientStatus && target.presence.clientStatus && Object.keys(target.presence.clientStatus).length ? ` [${Object.keys(target.presence.clientStatus)[0]}]` : ''}`
-              }, (this.insertIf(target.flags.toArray().length, {
+              }, (Utils.insertIf(target.flags.toArray().length, {
                 name: 'Flags',
                 value: target.flags.toArray().join(' ')
               })), {
@@ -116,9 +116,5 @@ module.exports = {
           message.channel.send(error.message, { code: 'fix' })
         }
       })
-  },
-
-  insertIf(condition, object) {
-    return condition ? object : undefined
   }
 }
