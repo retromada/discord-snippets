@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js')
+const { Utils } = require('../../')
 
 module.exports = {
   name: 'channel',
@@ -32,23 +33,24 @@ module.exports = {
       .addFields([
         {
           name: 'ID',
-          value: channel.id,
-          inline: false
+          value: channel.id
         }, {
           name: 'Type',
           value: channel.type
-        }, {
+        }, (Utils.insertIf(channel.type === 'text', {
           name: 'NSFW',
           value: channel.nsfw ? 'Enabled' : 'Disabled'
-        }, {
+        })), {
           name: 'Creation Date',
           value: channel.createdAt
-        }, {
+        }, (Utils.insertIf(channel.type === 'text' && channel.topic, {
           name: 'Topic',
           value: channel.topic,
           inline: false
-        }
-      ].map((element) => element.inline !== false ? ({ ...element, inline: true }) : element))
+        }))
+      ]
+      .filter(Boolean)
+      .map((element) => element.inline !== false ? ({ ...element, inline: true }) : element))
     )
   }
 }
