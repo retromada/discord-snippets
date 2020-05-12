@@ -1,3 +1,5 @@
+require('./core/utils/prototypes')
+
 const CLIENT_OPTIONS = {
   disableMentions: 'everyone'
 }

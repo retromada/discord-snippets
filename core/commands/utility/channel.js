@@ -36,7 +36,7 @@ module.exports = {
           value: channel.id
         }, {
           name: 'Type',
-          value: channel.type
+          value: channel.type.toProperCase()
         }, (Utils.insertIf(channel.type === 'text', {
           name: 'NSFW',
           value: channel.nsfw ? 'Enabled' : 'Disabled'
