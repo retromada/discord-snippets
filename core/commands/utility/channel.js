@@ -29,7 +29,7 @@ module.exports = {
 
     message.channel.send(new MessageEmbed()
       .setTitle(channel.name)
-      .setDescription(channel)
+      .setDescription(channel.type === 'text' ? channel : '')
       .addFields([
         {
           name: 'ID',
@@ -37,7 +37,10 @@ module.exports = {
         }, {
           name: 'Type',
           value: channel.type.toProperCase()
-        }, (Utils.insertIf(channel.type === 'text', {
+        }, (Utils.insertIf(channel.parentID, {
+          name: 'Category',
+          value: channel.parent && channel.parent.name
+        })), (Utils.insertIf(channel.type === 'text', {
           name: 'NSFW',
           value: channel.nsfw ? 'Enabled' : 'Disabled'
         })), {
