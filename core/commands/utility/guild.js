@@ -11,11 +11,13 @@ module.exports = {
   ],
   description: 'Shows details about the server',
   category: 'utility',
-  execute(message) {
+  async execute(message) {
     const guild = message.guild
     const channels = guild.channels.cache
     const emojis = guild.emojis.cache
     const roles = guild.roles.cache
+    const invites = await guild.fetchInvites()
+    const invite = guild.vanityURLCode ? guild.vanityURLCode : invites.array().sort((a, b) => a.memberCount - b.memberCount)[0].code
 
     message.channel.send(new MessageEmbed()
       .setTitle(guild.name)
@@ -24,17 +26,19 @@ module.exports = {
         {
           name: 'Information',
           value: [
-            `Id: ${guild.id}`,
+            `ID: ${guild.id}`,
             `Acronym: ${guild.nameAcronym}`,
             `Created: ${guild.createdAt}`,
             `Nitro Tier: ${guild.premiumTier}`,
             `Owner: ${guild.owner}`,
             `Region: ${guild.region}`,
+            `Invite: [${invite}](https://discord.gg/${invite})`,
             `Shard: ${guild.shardID + 1}/${guild.shard.manager.shards.size}`
           ].join('\n')
         }, {
           name: 'Moderation',
           value: [
+            `AFK Channel: ${guild.afkChannelID ? guild.afkChannel : 'None'}`,
             `AFK Timeout: ${guild.afkTimeout}`,
             `MFA: ${guild.mfaLevel}`,
             `Content Filter: ${guild.explicitContentFilter}`,
