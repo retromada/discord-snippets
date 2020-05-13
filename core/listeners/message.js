@@ -31,7 +31,7 @@ module.exports = (client, message) => {
     if (command.requirements.permissions.length) {
       const requiredPermissions = _.difference(command.requirements.permissions, message.member.permissions.toArray())
 
-      if (requiredPermissions.length) return message.reply(`you need permissions: \`${requiredPermissions.join('\` \`')}\``)
+      if (requiredPermissions.length) return message.reply(`you need permissions: \`${requiredPermissions.map((permission) => permissions.split('_').join(' ').toProperCase()).join('\` \`')}\``)
     }
 
     command.execute(message)
