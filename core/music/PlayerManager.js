@@ -4,9 +4,9 @@ const ytdl = require('ytdl-core')
 const { YoutubeSong } = require('./sources')
 
 module.exports = {
-  async loadTracks(identifier, { client }) {
+  async loadTracks(identifier, { client }, amount = 3) {
     const track = !/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi.test(identifier)
-      ? await YoutubeSong.searchSongs(identifier, client.apis.youtube)
+      ? await YoutubeSong.searchSongs(identifier, client.apis.youtube, amount)
       : identifier
 
     return await YoutubeSong.loadInfo(track, ytdl)
