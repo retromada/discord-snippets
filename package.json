@@ -1,6 +1,6 @@
 {
   "name": "retromada",
-  "version": "0.0.31-discord.social-0.3",
+  "version": "0.0.31-discord.social-0.4",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -14,7 +14,7 @@
     "discord.js": "https://github.com/discordjs/discord.js.git",
     "express": "^4.17.1",
     "lodash": "^4.17.15",
-    "mongoose": "^5.9.10",
+    "mongoose": "^5.9.14",
     "transform-props": "^1.0.1"
   },
   "devDependencies": {
